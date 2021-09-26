@@ -1,0 +1,52 @@
+#data-container{
+    display:grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "img title"
+    "img price"
+    "img buttons";
+    margin: 2rem auto;
+    width:90%;
+    align-items: center;
+    justify-items: center;
+}
+#book-img{
+    max-width: 300px;
+    grid-area: img;
+}
+#title{
+    grid-area:title;
+    padding-bottom:10px;
+    border-bottom: 2px solid rgb(202, 202, 202);
+}
+#book-name{
+    font-family: 'Playfair Display', serif;
+    font-size: 2.08rem;
+    text-align: center;
+}
+#book-author{
+    font-family: 'Yaldevi', sans-serif;
+    font-weight: 700;
+}
+
+@media screen and (max-width:1000px) {
+    #data-container{
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas:
+        "title"
+        "img"
+        "price"
+        "buttons";
+    }
+    #book-img{
+        max-width: 200px;
+    }
+    #title{
+        margin-bottom: 10px;
+    }
+    #book-author{
+        text-align: center;
+    }
+}
