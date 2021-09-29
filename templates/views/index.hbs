@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/book.css">
+    <link rel="stylesheet" href="/css/index.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap" rel="stylesheet">
@@ -14,25 +14,14 @@
 </head>
 <body>
     <header>{{>header}}</header>
-    <div id="data-container">
-        <img src={{image}} id="book-img">
-        <div id="title">
-            <div id="book-name">{{bookName}}</div>
-            <div id="book-author">by {{author}}</div>
-        </div>
-        <div id="stock-data">
-            <div id="book-price">
-                Price: 
-                <sup>$</sup>
-                {{price}}
-            </div>
-            <div id="book-amount">
-                currently in stock: {{amount}}
-            </div>
-        </div>
+    <div id="books-container"></div>
+    <div id="pagintaion-controller">
+        <h2 class="pagination-button" id="previous-button">< Previous</h2>
+        <h2 id="page-number"></h2>
+        <h2 class="pagination-button" id="next-button">Next ></h2>
     </div>
-
-    
     <footer>{{>footer}}</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

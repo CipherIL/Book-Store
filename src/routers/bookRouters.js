@@ -3,6 +3,16 @@ const Book = require('../models/book');
 const User = require("../models/user");
 const router = new express.Router();
 
+
+router.get('/', async (req,res)=>{
+    try{
+        res.render('index');
+    }
+    catch(err){
+        res.status(500).send(err);
+    }
+})
+
 //Upload new book to DB
 router.post('/b', async (req,res)=>{
     const book = new Book(req.body);
@@ -13,6 +23,53 @@ router.post('/b', async (req,res)=>{
         res.status(400).send({
             error:err.message
         })
+    }
+})
+
+router.get('/b/get/booksCount', async (req,res)=>{
+    try{
+        const booksCount = await Book.countDocuments({});
+        res.send({booksCount});
+
+    }
+    catch(err){
+        res.status(500).send(err);
+    }
+})
+
+router.get('/b/get/:limit/:skip', async (req,res)=>{
+    try{
+        const skip = parseInt(req.params.skip);
+        const limit = parseInt(req.params.limit);
+        const books = await Book.find().limit(limit).skip(skip);
+        if(!books) return res.status(404).send("No books found");
+        res.send(books);
+    }
+    catch(err){
+        res.status(500).send(err);
+    }
+})
+
+//Render search page
+router.get('/b/search', async (req,res)=>{
+    try{
+        res.render('search',{
+    })}
+    catch(err){
+        res.send(err);
+    }
+})
+//Get list of books by search parameters
+router.get('/b/search/get', async (req,res)=>{
+    try{
+        let books = [];
+        if(req.query.name) books = await Book.find({name:{$regex:req.query.name,$options:'i'}});
+        else books = await Book.find({author:{$regex:req.query.author,$options:'i'}});
+        if(books.length===0) return res.status(404).send("No books found");
+        res.send(books);
+    }
+    catch(err){
+        res.status(500).send(err);
     }
 })
 
@@ -27,7 +84,8 @@ router.get('/b/:bookID', async (req,res)=>{
             bookName:book.name,
             author:book.author,
             price:book.price,
-            amount:book.amountInStock
+            amount:book.amountInStock,
+            image: book.imageURL
         });
     }catch(err){
         res.status(500).send(err);
@@ -46,6 +104,8 @@ router.get('/b/:bookID/data', async (req,res)=>{
         res.status(500).send(err);
     }
 })
+
+
 
 
 module.exports = router;

@@ -19,6 +19,10 @@ const bookSchema = new mongoose.Schema({
     amountInStock:{
         type: Number,
         default: 0
+    },
+    imageURL:{
+        type:String,
+        required:true
     }
 })
 
