@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/adminPanel.css">
+    <title>Itay's Books - Admin Panel</title>
+</head>
+<body>
+    {{>adminHeader}}
+    <div id="buttons">
+        <button id="add-admin-button" class="button">Add New Admin</button>
+        <button id="edit-book-button" class="button">Edit Books</button>
+        <button id="add-new-book-button" class="button">Add A New Book</button>
+        <button id="edit-user-button" class="button">Edit Users</button>
+    </div>
+
+    <!--Modals-->
+    <!--Add new admin modal-->
+    <div id="add-admin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+        </div>
+    </div>
+
+    <div id="edit-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+        </div>
+    </div>
+
+    <div id="add-new-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+        </div>
+    </div>
+
+    <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+        </div>
+    </div>
+
+    <script src="/js/adminPanel.js"></script>
+</body>
+</html>
