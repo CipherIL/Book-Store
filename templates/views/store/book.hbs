@@ -7,8 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yaldevi:wght@300&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Yaldevi:wght@300&display=swap" rel="stylesheet">
     <title>Itay's Books</title>
 </head>
@@ -16,23 +14,36 @@
     <header>{{>header}}</header>
     <div id="data-container">
         <img src={{image}} id="book-img">
-        <div id="title">
+        <div id="book-title">
             <div id="book-name">{{bookName}}</div>
             <div id="book-author">by {{author}}</div>
+            <div id="book-id">ID:{{bookID}}</div>
         </div>
-        <div id="stock-data">
-            <div id="book-price">
-                Price: 
-                <sup>$</sup>
-                {{price}}
+        <div id="description">
+            {{bookDescription}}
+        </div>
+        <div id="shopping">
+            <div id="book-stock-data">
+                <div id="book-price">
+                    Price: {{price}}$
+                </div>
+                <div id="book-amount">
+                    In stock: {{amount}}
+                </div>
             </div>
-            <div id="book-amount">
-                currently in stock: {{amount}}
+            <div id="amount-to-add">
+                <button id="dec-amount">-1</button>
+                <span id="amount"></span>
+                <button id="inc-amount">+1</button>
+            </div>
+            <div id="add-to-cart">
+                <button id="add-to-cart-button">Add to cart</button>
             </div>
         </div>
     </div>
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+    <script src="/js/book.js"></script>
     <footer>{{>footer}}</footer>
 </body>
 </html>

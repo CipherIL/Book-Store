@@ -96,9 +96,11 @@ router.get('/b/:bookID', async (req,res)=>{
         res.render('book',{
             bookName:book.name,
             author:book.author,
+            bookDescription:book.description,
             price:book.price,
             amount:book.amountInStock,
-            image: book.imageURL
+            image: book.imageURL,   
+            bookID:book._id
         });
     }catch(err){
         res.status(500).send(err);

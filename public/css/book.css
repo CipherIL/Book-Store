@@ -3,50 +3,148 @@
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
     grid-template-areas: 
-    "img title"
-    "img price"
-    "img buttons";
+    "img data"
+    "img desc"
+    "img shopping";
     margin: 2rem auto;
     width:90%;
     align-items: center;
     justify-items: center;
 }
+
+/*Image*/
 #book-img{
-    max-width: 300px;
+    width: 300px;
     grid-area: img;
 }
-#title{
-    grid-area:title;
+/*Title*/
+#book-title{
+    grid-area:data;
     padding-bottom:10px;
     border-bottom: 2px solid rgb(202, 202, 202);
+    width: 90%;
+    align-self: start;
 }
 #book-name{
     font-family: 'Playfair Display', serif;
-    font-size: 2.08rem;
-    text-align: center;
+    font-size: 3vw;
+    text-align: start;
 }
 #book-author{
     font-family: 'Yaldevi', sans-serif;
     font-weight: 700;
+    font-size: 1.5vw;
 }
+#book-id{
+    text-align: end;
+    font-size: 1.3vw;
+    font-weight: 700;
+}
+
+/*Description*/
+#description{
+    width:90%;
+    align-self: start;
+    font-size: 1.3vw;
+}
+
+/*Shopping area*/
+#shopping{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#book-stock-data{
+
+}
+#book-price{
+    grid-area: price;
+}
+#book-amount{
+    grid-area: stock;
+}
+
+#amount-to-add{
+    grid-area:amount;
+    justify-self:center;
+    align-self: center;
+    margin: 0 20px;
+}
+#dec-amount,#inc-amount{
+    width: 40px;
+    height: 40px;
+    border:2px solid white;
+    border-radius: 100%;
+    cursor: pointer;
+    margin: 0 10px;
+    background-color: rgb(40, 141, 40);
+}
+#dec-amount:hover,#inc-amount:hover{
+    border: 2px solid black;
+}
+#dec-amount:active,#inc-amount:active{
+    background-color: #1e691e;
+}
+
+#add-to-cart{
+    grid-area: cart;
+    justify-self:center;
+    align-self: center;
+}
+#add-to-cart-button{
+    width:100px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    background-color: rgb(40, 141, 40);
+}
+#add-to-cart-button:hover{
+    background-color: #1e691e;
+}
+#add-to-cart-button:active{
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);      
+}
+
 
 @media screen and (max-width:1000px) {
     #data-container{
         grid-template-columns: auto;
         grid-template-rows: auto auto auto auto;
         grid-template-areas:
-        "title"
+        "data"
         "img"
-        "price"
-        "buttons";
+        "desc"
+        "shopping";
     }
-    #book-img{
-        max-width: 200px;
+    #book-title{
+        border: none;
     }
-    #title{
-        margin-bottom: 10px;
+    #book-name{
+        font-size: 6vw;
+        text-align: start;
     }
     #book-author{
-        text-align: center;
+        font-size: 4vw;
+        text-align:start;
+        margin:5px 0;
     }
+    #book-id{
+        font-size: 3vw;
+        text-align: end;
+    }
+    #book-img{
+        width: 200px;
+        border-bottom: 3px solid rgb(202, 202, 202);
+    }
+    #description{
+        font-size: 3.5vw;
+    }
+    #shopping{
+        margin-top:20px;
+        flex-wrap: wrap;
+    }    
 }
