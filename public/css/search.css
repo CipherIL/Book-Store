@@ -1,12 +1,12 @@
-#form-container{
+#search-form-container{
     width: fit-content;
     margin: 1rem auto;
 }
-#form{
+#search-form{
     display: flex;
 }
 
-#form-radios{
+#search-form-radios{
     margin-right: 2rem;
 }
 
@@ -25,6 +25,7 @@
     grid-template-areas: 
     "img name"
     "img author";
+    cursor: pointer;
 }
 .book-image{
     grid-area: img;
@@ -43,10 +44,10 @@
 }
 
 @media screen and (max-width:1000px){
-    #form{
+    #search-form{
         flex-direction: column;
     }
-    #form *{
+    #search-form *{
         margin-bottom: 0.5rem;
     }
     .book{

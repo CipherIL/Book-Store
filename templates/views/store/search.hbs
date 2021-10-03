@@ -12,22 +12,7 @@
 </head>
 <body>
     <header>{{>header}}</header>
-    <div id="form-container">
-        <form id="form">
-            <div id="form-radios">
-                <input type="radio" name="search-by" id="book" value="book" checked="checked">
-                <label for="book">Book</label>
-                <input type="radio" name="search-by" id="author" value="author">
-                <label for="author">Author</label>
-            </div>
-            <div id="form-text">
-                <label for="text">Search:</label>
-                <input type="text" name="text" id="text" required>
-                <input type="submit" id="form-button">
-            </div>
-        </form>
-    </div>
-    <div id="search-results"></div>
+    {{>searchBook}}
     <footer>{{>footer}}</footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
     <script src="/js/search.js"></script>

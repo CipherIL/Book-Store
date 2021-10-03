@@ -1,11 +1,10 @@
-// const axios = require('axios');
-const $formButton = document.getElementById('form-button');
+const $formButton = document.getElementById('search-form-button');
 const $searchResultsDisplayer = document.getElementById('search-results');
 
 $formButton.addEventListener('click',(e)=>{
     e.preventDefault();
     const formSearchByValue = document.querySelector('input[name="search-by"]:checked').value;
-    const formTextValue = document.getElementById('text').value;
+    const formTextValue = document.getElementById('search-text').value;
     //validate 
     if(formTextValue==="") return alert("Please enter search text");
 
@@ -44,6 +43,46 @@ $formButton.addEventListener('click',(e)=>{
             container.appendChild(bookImage);
             container.appendChild(bookName);
             container.appendChild(bookAuthor);
+            //Add functionality
+            //Admin panel functionality
+            if(location.href.endsWith('/admin/panel')){
+                const $searchBook = document.getElementById('search-book');
+                const $editBook = document.getElementById('edit-book');
+                const $loadingText = document.getElementById('loading-text');
+                const $bookID = document.getElementById('edit-book-id');
+                const $bookName = document.getElementById('edit-book-name');
+                const $bookAuthor = document.getElementById('edit-book-author');
+                const $bookDescription = document.getElementById('edit-book-description');
+                const $bookPrice = document.getElementById('edit-book-price');
+                const $bookQuantity = document.getElementById('edit-book-quantity');
+                const $bookImageURL = document.getElementById('edit-book-image');
+                container.addEventListener('click', async ()=>{
+                    $searchBook.hidden = true;
+                    $loadingText.hidden = false;
+                    try{
+                        let bookData = await axios.get(`/b/${book._id}/data`);
+                        bookData = bookData.data;
+                        $bookID.innerHTML = bookData._id;
+                        $bookName.value = bookData.name;
+                        $bookAuthor.value = bookData.author;
+                        $bookDescription.value = bookData.description;
+                        $bookPrice.value = bookData.price;
+                        $bookQuantity.value = bookData.amountInStock;
+                        $bookImageURL.value = bookData.imageURL;
+                        $loadingText.hidden = true;
+                        $editBook.hidden = false;
+                    }
+                    catch(err){
+                        console.log(err);
+                    }
+                })
+            }
+            //Search page functionality
+            else if(location.href.endsWith('/search')){
+                container.addEventListener('click',()=>{
+                    location.href = `/b/${book._id}`;
+                })
+            }
             $searchResultsDisplayer.appendChild(container);
         })
         $formButton.disabled=false;
@@ -55,5 +94,3 @@ $formButton.addEventListener('click',(e)=>{
         $formButton.disabled=false;
     })
 })
-
-

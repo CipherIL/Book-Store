@@ -53,6 +53,9 @@ const renderBooks = async () => {
                 bookContainer.appendChild(bookName);
                 bookContainer.appendChild(bookAuthor);
                 $booksContainer.appendChild(bookContainer);
+                bookContainer.addEventListener('click',()=>{
+                    location.href=`/b/${book._id}`;
+                })
             })
         })
         

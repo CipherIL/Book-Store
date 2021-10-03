@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require('../middleware/auth');
 const Book = require('../models/book');
 const User = require("../models/user");
 const router = new express.Router();
@@ -18,9 +19,9 @@ router.post('/b', async (req,res)=>{
     const book = new Book(req.body);
     try{
         await book.save();
-        res.status(201).send(book);
+        res.status(201).send("New Book Added successfuly");
     }catch(err){
-        res.status(400).send({
+        res.send({
             error:err.message
         })
     }
@@ -73,6 +74,18 @@ router.get('/b/search/get', async (req,res)=>{
     }
 })
 
+router.patch('/b/edit/:bookID', auth, async (req,res)=>{
+    try{
+        const book = await Book.findByIdAndUpdate(req.params.bookID,req.body);
+        if(!book)
+            return res.status(400).send("No book found");
+        res.send("Book updated successfully");
+    }
+    catch(err){
+        res.status(500).send("Server Error");
+    }
+})
+
 //Get page for single book
 router.get('/b/:bookID', async (req,res)=>{
     try{
@@ -104,6 +117,5 @@ router.get('/b/:bookID/data', async (req,res)=>{
         res.status(500).send(err);
     }
 })
-
 
 module.exports = router;

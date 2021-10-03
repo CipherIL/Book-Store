@@ -10,7 +10,6 @@ const auth = async (req,res,next) => {
         const admin = await Admin.findOne({_id: data._id, 'tokens.token': token});
         if(!admin)
             return res.status(400).render('accessDenied');
-        console.log(admin);
         next();
     }catch(err){
         res.status(401).send(err);

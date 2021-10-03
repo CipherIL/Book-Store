@@ -2,6 +2,10 @@
     margin:0;
 }
 
+body{
+    height:100vh;
+}
+
 #header{
     background-color: rgb(40, 141, 40);
     display: flex;
@@ -57,24 +61,109 @@
 
 }
 .modal-content{
-    background-color: #fefefe;
+    background-color: rgb(40, 141, 40);
     margin: auto;
-    padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 50vw;
+    max-height: 90vh;
+    overflow: auto;
 }
 .close{
-    color: #aaaaaa;
+    color: white;
     float: right;
     font-size: 28px;
     font-weight: bold;
     z-index: 2;
+    margin-right: 5px;
 }
 .close:hover,.close:focus{
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
+
+.modal-title{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3vw;
+    padding:0.8rem;
+}
+.modal-content form{
+    background-color: #fefefe;
+    width:100%;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    overflow: auto;
+}
+.form-field{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.form-field input{
+    width:70%;
+}
+.submit-button{
+    margin: 0 auto;
+}
+.form-response{
+    text-align: center;
+    margin: 0 auto;
+}
+
+/*Search Form*/
+#search-book{
+    background-color: white;
+}
+.book{
+    width: 100%;
+    margin: 0 auto;
+    border-top: 2px solid rgb(90, 90, 90);
+    padding: 0.5rem 0;
+    display:grid;
+    grid-template-columns: 20% auto;
+    grid-template-areas: 
+    "img name"
+    "img author";
+    cursor: pointer;
+}
+.book-image{
+    grid-area: img;
+    max-width: 150px;
+    height:auto;
+    padding: 10px;
+}
+.book-name{
+    grid-area: name;
+    align-self: center;
+    text-align: center;
+}
+.book-author{
+    grid-area: author;
+    align-self: center;
+    text-align: center;
+}
+#edit-book{
+    background-color: white;
+}
+.return{
+    font-weight: bold;
+    font-size: 28px;
+    color: #888;
+    padding-left: 10px;
+}
+.return:hover,.return:focus{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width:1000px) {
     #header{
@@ -93,5 +182,28 @@
         width: 30vw;
         height: 30vw;
         font-size: 4vw;
+    }
+    .modal-content{
+        width:90%;
+    }
+    .form-field{
+        width:90%;
+    }
+    
+    .modal-title{
+        font-size: 5vw;
+    }
+
+    #search-form{
+        flex-direction: column;
+    }
+    #search-form *{
+        margin-bottom: 0.5rem;
+    }
+    .book{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }

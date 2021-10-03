@@ -21,18 +21,52 @@
     <div id="add-admin-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <h1 class="modal-title">Add New Admin</h1>
+            <form>
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="add-admin-form-email">
+                </div>
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input type="text" name="password" id="add-admin-form-password">
+                </div>
+                <div class="form-field">
+                    <button class="submit-button" id="add-admin-submit">Submit</button>
+                </div>
+                <div class="form-field">
+                    <h2 class="form-response" id="add-admin-form-response"></h2>
+                </div>
+            </form>
         </div>
     </div>
 
     <div id="edit-book-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <h1 class="modal-title">Edit Book</h1>
+            <div id="search-book">{{>searchBook}}</div>
+            <div id="loading-text" hidden><h1>Loading ...</h1></div>
+            <div id="edit-book" hidden>
+                <span class="return">&#8592;</span>
+                <form>
+                    <div class="form-field">
+                    <label>ID</label>
+                    <span id="edit-book-id"></span>
+                    </div>
+                    {{>bookForm prefix = "edit"}}
+                </form>
+            </div>
         </div>
     </div>
 
     <div id="add-new-book-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <h1 class="modal-title">Add New Book</h1>
+            <form>
+                {{>bookForm prefix = "add-new"}}
+            </form>
         </div>
     </div>
 
@@ -42,6 +76,8 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+    <script src="/js/search.js"></script>
     <script src="/js/adminPanel.js"></script>
 </body>
 </html>
