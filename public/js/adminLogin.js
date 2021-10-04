@@ -5,14 +5,8 @@ const $loginButton = document.getElementById('form-button');
 const adminToken = document.cookie;
 
 const initPage = async () => {
-    if(adminToken){
-        try{
-            location.replace('/admin/panel');          
-        }
-        catch(err){
-            console.log("test");
-        }
-    }
+    if(adminToken)
+            location.replace('/admin/panel');
     else
         $loginPanel.hidden = false;
 }

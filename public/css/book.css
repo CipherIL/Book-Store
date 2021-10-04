@@ -80,6 +80,9 @@
     cursor: pointer;
     margin: 0 10px;
     background-color: rgb(40, 141, 40);
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
 }
 #dec-amount:hover,#inc-amount:hover{
     border: 2px solid black;
@@ -100,6 +103,9 @@
     border-radius: 15px;
     box-shadow: 0 9px #999;
     background-color: rgb(40, 141, 40);
+    font-size: 1rem;
+    font-weight: bold;
+    color:white;
 }
 #add-to-cart-button:hover{
     background-color: #1e691e;

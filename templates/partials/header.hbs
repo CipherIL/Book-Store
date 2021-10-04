@@ -5,10 +5,25 @@
         <div></div>
         <div></div>
     </div>
-    <div id="links">
+    <div id="links" class="links">
         <a href="/">Browse</a>
         <a href="/b/search">Search</a>
+        <a href="/cart"><img src="/images/cart.svg" class="svg-icon"></a>
         <a href="" id="user">Account</a>
-        <a href="">Shopping Cart</a>
+    </div>
+</div>
+<div id="user-modal">
+    <div id="user-modal-content">
+        <div id="user-modal-title">
+            <span class="close">&times;</span>
+        </div>
+        <div id="user-modal-buttons">
+            <button id="login-form-button" class="modal-button selected">Login</button>
+            <button id="register-form-button" class="modal-button">Register</button>
+        </div>
+        <div id="user-modal-forms">
+            {{>loginForm}}
+            {{>registerForm}}
+        </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 const express = require("express");
-const auth = require('../middleware/auth');
+const {adminAuth} = require('../middleware/auth');
 const Book = require('../models/book');
 const User = require("../models/user");
 const router = new express.Router();
@@ -74,7 +74,7 @@ router.get('/b/search/get', async (req,res)=>{
     }
 })
 
-router.patch('/b/edit/:bookID', auth, async (req,res)=>{
+router.patch('/b/edit/:bookID', adminAuth, async (req,res)=>{
     try{
         const book = await Book.findByIdAndUpdate(req.params.bookID,req.body);
         if(!book)
@@ -117,6 +117,16 @@ router.get('/b/:bookID/data', async (req,res)=>{
         res.send(book);
     }catch(err){
         res.status(500).send(err);
+    }
+})
+
+//Get shopping cart page
+router.get('/cart', async (req,res)=>{
+    try{
+        res.render('shoppingCart');
+    }
+    catch(err){
+        res.status(500).send("Server Error");
     }
 })
 

@@ -22,5 +22,8 @@ $incAmount.addEventListener('click',()=>{
 })
 
 $addToCartButton.addEventListener('click', async ()=>{
-    
+    axios.patch('/user/addToCart',{
+        _id:bookID,
+        amount:amountToAdd
+    });
 })

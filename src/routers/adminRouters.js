@@ -1,9 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const auth = require('../middleware/auth');
+const {adminAuth} = require('../middleware/auth');
+const Admin = require('../models/admin');
 
 const router = new express.Router();
-const Admin = require('../models/admin');
 
 //Admin login page
 router.get('/admin', async (req,res)=>{
@@ -26,7 +26,7 @@ router.post('/admin/login', async(req,res)=>{
             return res.status(400).send("Invalid email or password");
         }
         const token = await admin.generateAuthToken();
-        res.cookie('Authorization',`Bearer ${token}`);
+        res.cookie('adminToken',`${token}`);
         res.send();
     }
     catch(err){
@@ -34,11 +34,11 @@ router.post('/admin/login', async(req,res)=>{
     }
 })
 
-router.get('/admin/panel', auth , async (req,res)=>{
+router.get('/admin/panel', adminAuth , async (req,res)=>{
     res.render('adminPanel');
 })
 
-router.post('/admin/new', auth, async (req,res)=>{
+router.post('/admin/new', adminAuth, async (req,res)=>{
     try{
         const admin = new Admin(req.body);
         await admin.save();

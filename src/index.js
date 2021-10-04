@@ -26,7 +26,7 @@ app.use(express.static(publicFolderPath));
 app.use(express.json());
 app.use(bookRouters);
 app.use(adminRouters);
-//app.use(userRouters);
+app.use(userRouters);
 hbs.registerPartials(partialsFolderPath);
 
 require("./db/mongodbConnect"); //Start mongodb session
