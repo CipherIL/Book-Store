@@ -15,10 +15,11 @@ body{
     justify-content: space-between;
 }
 
-#header-title{
+#logout{
     margin-right: 50px;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
+    cursor:pointer;
 }
 
 #buttons{

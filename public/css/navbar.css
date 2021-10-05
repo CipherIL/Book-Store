@@ -19,12 +19,13 @@
     align-items: center;
     flex-grow: 1;
 }
-#links a{
+.link{
     text-decoration: none;
     color:white;
     font-size:1.2rem;
     font-weight: bold;
     background-color: rgb(40, 141, 40);
+    cursor: pointer;
 }
 #hamburger-icon{
     grid-area: icon;
@@ -55,7 +56,7 @@
 }
 
 /* User Modal */
-#user-modal{
+#user-modal-1{
     display: none;
     position: fixed;
     z-index: 1;
@@ -69,14 +70,28 @@
     background-color: rgb(0,0,0);
     background-color: rgb(0,0,0,0.4);
 }
-#user-modal-content{
+#user-modal-2{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgb(0,0,0,0.4);
+}
+.user-modal-content{
     background-color: white;
     width: 40%;
     height: 60%;
     display:flex;
     flex-direction: column;
 }
-#user-modal-title{
+.user-modal-title{
     background-color: rgb(40, 141, 40);
     height:35px;
 }
@@ -92,7 +107,7 @@
     cursor: pointer;
 }
 
-#user-modal-buttons{
+.user-modal-buttons{
     display: grid;
     width:100%;
     grid-template-columns: 1fr 1fr;
@@ -161,7 +176,7 @@
         max-width: 30px;
         max-height: 4px;
     }
-    #user-modal-content{
+    .user-modal-content{
         width: 90%;
     }
     .form-field{

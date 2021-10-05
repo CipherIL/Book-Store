@@ -1,16 +1,23 @@
 const $navbar = document.querySelector('#navbar');
 const $hamburgerIcon = document.querySelector('#hamburger-icon');
-const $links = document.querySelector('#links');
-const $userLink = document.querySelector('#user');
-const $userModal = document.querySelector('#user-modal');
-const $modalFormButtons = document.querySelectorAll('.modal-button');
-const $modalCloseButton = document.querySelector('.close');
+const $userModal1 = document.getElementById('user-modal-1');
+const $userModal2 = document.getElementById('user-modal-2');
+//Forms
 const $loginForm = document.querySelector("#login-form");
 const $registerForm = document.querySelector("#register-form");
+//Buttons
 const $loginSubmitButton = document.querySelector('#login-submit');
 const $registerSubmitButton = document.querySelector('#register-submit');
+const $modalCloseButton = document.querySelectorAll('.close');
+const $modalFormButtons = document.querySelectorAll('.modal-button');
+//Links
+const $links = document.querySelector('#links');
+const $browseLink = document.getElementById('link-browse');
+const $searchLink = document.getElementById('link-search');
+const $userLink = document.getElementById('link-user');
+const $cartLink = document.getElementById('link-cart');
 
-
+//Util funcs
 const getCookieValue = (name) =>{
     let match = document.cookie.match(RegExp('(?:^|;\\s*)'+name+'=([^;]*)'));
     return match ? match[1]:null;
@@ -31,6 +38,20 @@ const setNavbarVisibility = () => {
     }
 }
 
+const getCart = async () =>{
+    let cart;
+    const userToken = getCookieValue('userToken');
+    if(userToken){ //logged in as a user
+        cart = await axios.get('/user/cart');
+        cart = cart.data;
+        cart = JSON.stringify(cart)
+    }
+    else{ //anonymous cart
+        cart = localStorage.getItem('cart');
+    }
+    return cart;
+}
+
 //Hamburger navbar logic
 $hamburgerIcon.addEventListener('click',()=>{
     if($links.classList.contains('hidden'))
@@ -39,20 +60,36 @@ $hamburgerIcon.addEventListener('click',()=>{
         $links.classList.add('hidden');
 })
 
-//account logic
+//Links logic
+$browseLink.addEventListener('click',()=>{
+    location.href = '/';
+})
+$searchLink.addEventListener('click',()=>{
+    location.href = '/b/search';
+})
+$cartLink.addEventListener('click', async (e)=>{
+    e.preventDefault();
+    getCart()
+    .then(cart=>{
+        document.cookie = `cart=${cart};path=/`; //upload cart to cookie
+        location.href = '/cart';
+    })
+})
+
+//user general logic
 const username = getCookieValue("username")
 if(username){
     $userLink.innerHTML = username;
 }
-
-//User modal logic
 $userLink.addEventListener('click',(e)=>{
-    e.preventDefault();
-    if($userLink.innerHTML === 'Account'){
-        $userModal.style.display = "flex";
-    }
+    if($userLink.innerHTML === 'Account')
+        $userModal1.style.display = "flex";
+    else
+        $userModal2.style.display = "flex";
+
 })
-$userModal.addEventListener('click',(e)=>{
+//User login/register modal
+$userModal1.addEventListener('click',(e)=>{
     if(e.target === $modalFormButtons[0]){
         $modalFormButtons[0].classList.add('selected');
         $loginForm.classList.remove('hidden');
@@ -65,23 +102,29 @@ $userModal.addEventListener('click',(e)=>{
         $modalFormButtons[0].classList.remove('selected');
         $loginForm.classList.add('hidden');
     }  
-    if(e.target === $userModal)
-        $userModal.style.display = "none";
-    if(e.target === $modalCloseButton)
-        $userModal.style.display = "none";
+    if(e.target === $userModal1)
+        $userModal1.style.display = "none";
+    if(e.target === $modalCloseButton[0])
+        $userModal1.style.display = "none";
 })
-
 $loginSubmitButton.addEventListener('click', async (e)=>{
     e.preventDefault();
     $loginSubmitButton.disabled = true;
     const $loginEmail = document.querySelector('#login-email');
     const $loginPassword = document.querySelector('#login-password');
+    let cart = [];
+    if(localStorage.getItem('cart'))
+        cart = JSON.parse(localStorage.getItem('cart'));
     try{
         axios.post('/user/login',{
             email: $loginEmail.value,
             password: $loginPassword.value,
+            cart
         })
-        .then(response=>{location.reload})
+        .then(response=>{
+            localStorage.removeItem('cart');
+            location.href=location.href;
+        })
         .catch(err=>{
             console.log(err.response.data)
         })
@@ -89,11 +132,7 @@ $loginSubmitButton.addEventListener('click', async (e)=>{
     catch(err){
         console.log(err)
     }
-    setTimeout(()=>{
-        $loginSubmitButton.disabled = false;
-    },2000)
 })
-
 $registerSubmitButton.addEventListener('click', async (e)=>{
     e.preventDefault();
     const $firstName = document.querySelector('#register-first-name');
@@ -101,13 +140,17 @@ $registerSubmitButton.addEventListener('click', async (e)=>{
     const $email = document.querySelector('#register-email');
     const $password = document.querySelector('#register-password');
     const $dateOfBirth = document.querySelector('#register-dob');
+    let cart = [];
+    if(localStorage.getItem('cart'))
+        cart = JSON.parse(localStorage.getItem('cart'));
     try{
         axios.post('/user/new',{
             firstName: $firstName.value,
             lastName: $lastName.value,
             email: $email.value,
             password: $password.value,
-            dateOfBirth: $dateOfBirth.value
+            dateOfBirth: $dateOfBirth.value,
+            cart
         })
         .then(response=>{console.log(response)})
         .catch(err=>{
@@ -119,6 +162,22 @@ $registerSubmitButton.addEventListener('click', async (e)=>{
     }
 })
 
+//User edit/logout modal
+$userModal2.addEventListener('click',(e)=>{
+    if(e.target === $userModal2)
+        $userModal2.style.display = "none";
+    if(e.target === $modalCloseButton[1])
+        $userModal2.style.display = "none";
+    if(e.target === $modalFormButtons[3]){ //logout
+        axios.post('/user/logout')
+        .then(response=>{
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            location.reload();
+        })
+    }
+})
 
 window.onresize = () => setNavbarVisibility();
 setNavbarVisibility();

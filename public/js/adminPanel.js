@@ -21,6 +21,9 @@ const $addNewBookSubmit = document.getElementById('add-new-book-submit');
 const $editBookSearchSubmit = document.getElementById('search-form-button');
 const $editBookSubmit = document.getElementById('edit-book-submit');
 
+//get logout button
+const $logoutButton = document.getElementById('logout');
+
 //set modal show/hide configs
 $modalButtons.forEach((button,index)=>{
     button.onclick = ()=>{
@@ -139,4 +142,14 @@ $addNewBookSubmit.addEventListener('click', async (e)=>{
         bookQuantity.value = ""
         bookImageURL.value = ""
     },2000)
+})
+
+$logoutButton.addEventListener('click',()=>{
+    axios.post('/admin/logout')
+    .then(response=>{
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+        location.href = '/admin';
+    })
 })

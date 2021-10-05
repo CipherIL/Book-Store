@@ -13,13 +13,26 @@
 <body>
     <header>{{>header}}</header>
     <div id="content-container">
-        <div id="cart-list">Loading ...</div>
+        <div id="cart-list">
+            
+            <div id="empty-cart-message">
+                Your cart is empty! 
+            </div>
+            
+            <div id="books-container">
+                {{#each books}}
+                    {{>bookDoc}}
+                {{/each}}
+            </div>
+        </div>
+        {{#if books}}
         <div id="checkout-area">
             <div id="checkout-data">
-
+                {{totalPrice}}$
             </div>
             <button id="checkout-button">Checkout</button>
         </div>
+        {{/if}}
     </div>
     <footer>{{>footer}}</footer>
     <script src="/js/shoppingCart.js"></script>

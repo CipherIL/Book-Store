@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const adminSchema = new mongoose.Schema({
     email:{
@@ -38,6 +39,13 @@ adminSchema.methods.generateAuthToken = async function () {
     await this.save();
     return token;
 }
+
+adminSchema.pre('save',async function(next){
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password,8);
+    }
+    next();
+})
 
 const Admin = mongoose.model('Admin',adminSchema);
 module.exports = Admin;

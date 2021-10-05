@@ -1,5 +1,131 @@
 #content-container{
-    width:100%;
+    width:95%;
+    margin: 2rem auto;
     display: grid;
     grid-template-columns: 70% 30%;
+    
+}
+
+.book-container{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(170, 170, 170);
+}
+
+.book-img{
+    width: 150px;
+}
+
+.book-data{
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+    flex-grow: 1;
+}
+
+.book-name{
+    font-family: 'Playfair Display', serif;
+    font-size: 2vw;
+}
+
+.book-author{
+    font-family: 'Yaldevi', sans-serif;
+    font-size: 1.4vw;
+}
+.amount-control{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+.amount{
+    margin: 0 20px;
+    font-size: 1.7vw;
+    font-weight: bold;
+    color:rgb(40, 141, 40);
+}
+.dec-amount,.inc-amount{
+    font-size: 28px;
+    font-weight: bold;
+    color:rgb(40, 141, 40);
+    cursor: pointer;
+}
+.dec-amount:hover,.inc-amount:hover{
+    color: rgb(26, 97, 26)
+}
+.delete-book{
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 30px;
+    color:red;
+    cursor: pointer;
+}
+.delete-book:hover{
+    color:rgb(185, 0, 0);
+}
+
+.price{
+    align-self:center;
+}
+
+#checkout-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin-top: 2rem;
+}
+#checkout-data{
+    font-size: 2vw;
+    margin-bottom: 1rem;
+}
+#checkout-button{
+    width:100px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    background-color: rgb(40, 141, 40);
+    font-size: 1rem;
+    font-weight: bold;
+    color:white;
+}
+#checkout-button:hover{
+    background-color: #1e691e;
+}
+#checkout-button:active{
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);      
+}
+
+@media screen and (max-width:1000px){
+    #content-container{
+        display: flex;
+        flex-direction: column;
+    }
+    .book-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .book-name{
+        font-size: 5vw;
+        text-align: center;
+    }
+    .book-author{
+        font-size: 4vw;
+        text-align: center;
+        margin: 5px 0;
+    }
+    .amount-control{
+        margin: 10px 0;
+    }
+    .amount{
+        font-size: 6vw;
+    }
+    #checkout-data{
+        font-size: 6vw;
+    }
 }

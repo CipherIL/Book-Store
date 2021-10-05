@@ -1,59 +1,84 @@
 const token = getCookieValue('userToken');
 const $cartList = document.querySelector('#cart-list');
+const $totalPrice = document.querySelector('#checkout-data');
+const $books = [...document.querySelectorAll('.book-container')]
+const $decButtons = [...document.querySelectorAll('.dec-amount')];
+const $incButtons = [...document.querySelectorAll('.inc-amount')];
+const $deleteButtons = [...document.querySelectorAll('.delete-book')];
+const $amounts = [...document.querySelectorAll('.amount')];
+const $prices = [...document.querySelectorAll('.price')];
+const $bookIds = [...document.querySelectorAll('.book-id')]
 
-
-const getCart = async () =>{
-    //Logged in
-    if(token){
-        const response = await axios.get('/user/cart');
-        if(response.status === 200)
-            return response.data;
-    }
-    //Anonymous cart
-    else{
-
+//Util funcs
+const checkEmptyCart = () =>{
+    if(parseInt($totalPrice.innerHTML)===0){
+        document.querySelector('#checkout-area').style.display="none";
+        document.querySelector('#books-container').style.display="none";
+        document.querySelector('#empty-cart-message').style.display="block";
+        localStorage.removeItem('cart');
     }
 }
+const changeItemAmount = (id,val) =>{
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    const index = cart.findIndex(book=>book._id===id)
+    cart[index].amount+=val;
+    localStorage.setItem('cart',JSON.stringify(cart));
+}
 
-const renderCart = async () => {
-    const cart = await getCart();
-    $cartList.innerHTML = "";
-    cart.forEach(async (book)=>{
-        //get book data
-        const response = await axios.get(`/b/${book._id}/data`);
-        const bookData = response.data;
-        //Create elements
-        const $bookContainer = document.createElement('div');
-        const $bookImage = document.createElement('img');
-        const $dataContainer = document.createElement('div');
-        const $bookData = document.createElement('div');
-        const $bookEdit = document.createElement('div');
-        const $totalPrice = document.createElement('div');
-        const $bookDataName = document.createElement('h1');
-        const $bookDataAuthor = document.createElement('h2');
-    
-        //Assign classes and ids
-        $bookContainer.classList.add('book-container');
-        $bookImage.classList.add('book-image');
-        $dataContainer.classList.add('data-container');
-        $bookData.classList.add('book-data');
-        $bookEdit.classList.add('book-edit');
-        $totalPrice.classList.add('book-total-price');
-        $bookDataName.classList.add('')
-        //Insert data
-        $bookImage.src = bookData.imageURL;
-        //Add Logic
+const removeFromCart = (id)=>{
+    let cart = JSON.parse(localStorage.getItem('cart'));
+    const index = cart.findIndex(book=>book._id===id)
+    cart.splice(index,1);
+    localStorage.setItem('cart',JSON.stringify(cart));
+}
 
-        //Append elements
-        $dataContainer.appendChild($bookData);
-        $dataContainer.appendChild($bookEdit);
+//hide empty cart message if not empty
+if($books.length!==0)
+document.querySelector('#empty-cart-message').style.display="none";
 
-        $bookContainer.appendChild($bookImage);
-        $bookContainer.appendChild($dataContainer);
-        $bookContainer.appendChild($totalPrice);
+//save cart in local storage for changes
+if(getCookieValue('cart')!=='null')
+    localStorage.setItem('cart',getCookieValue('cart'));
 
-        $cartList.appendChild($bookContainer);
+
+$decButtons.forEach((button,i)=>{
+    button.addEventListener('click',()=>{
+        let amount = parseInt($amounts[i].innerHTML);
+        const price = parseInt($prices[i].innerHTML)/amount;
+        const totalPrice = parseInt($totalPrice.innerHTML)-(price*amount);
+        if(amount>1) {
+            amount--;
+            $amounts[i].innerHTML = amount.toString();
+            $prices[i].innerHTML = (amount*price).toString()+'$';
+            $totalPrice.innerHTML = (totalPrice+(price*amount)).toString()+'$';
+            changeItemAmount($bookIds[i].innerHTML,-1);
+        }         
     })
-}
+})
 
-renderCart();
+$incButtons.forEach((button,i)=>{
+    button.addEventListener('click',()=>{
+        let amount = parseInt($amounts[i].innerHTML);
+        const price = parseInt($prices[i].innerHTML)/amount;
+        const totalPrice = parseInt($totalPrice.innerHTML)-(price*amount);
+        if(amount<100) {
+            amount++;
+            $amounts[i].innerHTML = amount.toString();
+            $prices[i].innerHTML = (amount*price).toString()+'$';
+            $totalPrice.innerHTML = (totalPrice+(price*amount)).toString()+'$';
+            changeItemAmount($bookIds[i].innerHTML,1);
+        }
+    })
+})
+
+$deleteButtons.forEach((button,i)=>{
+    button.addEventListener('click',()=>{
+        let amount = parseInt($amounts[i].innerHTML);
+        const price = parseInt($prices[i].innerHTML)/amount;
+        let totalPrice = parseInt($totalPrice.innerHTML)-(price*amount);
+        $totalPrice.innerHTML = totalPrice.toString()+'$';
+        removeFromCart($bookIds[i].innerHTML);        
+        $books[i].remove();
+        checkEmptyCart();
+    })
+})

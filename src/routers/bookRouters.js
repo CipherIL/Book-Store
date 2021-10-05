@@ -1,9 +1,26 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const {adminAuth} = require('../middleware/auth');
 const Book = require('../models/book');
 const User = require("../models/user");
 const router = new express.Router();
 
+const bookArrFromCart = async (cart) =>{
+    const books = {
+        books: [],
+        totalPrice: 0
+    };
+    for(let i=0;i<cart.length;i++){
+        const bookData = await Book.findById(cart[i]._id);
+        books.books.push({
+            bookData,
+            amount:cart[i].amount,
+            totalPrice: bookData.price * cart[i].amount
+        })
+        books.totalPrice += bookData.price * cart[i].amount;
+    }
+    return books;
+}
 
 router.get('/', async (req,res)=>{
     try{
@@ -122,12 +139,16 @@ router.get('/b/:bookID/data', async (req,res)=>{
 
 //Get shopping cart page
 router.get('/cart', async (req,res)=>{
-    try{
-        res.render('shoppingCart');
-    }
-    catch(err){
-        res.status(500).send("Server Error");
-    }
+    let cart = [];
+    if(req.cookies.cart)
+        cart = JSON.parse(req.cookies.cart);
+    let books = {}
+    if(cart)
+        books = await bookArrFromCart(cart);
+    res.render('shoppingCart',{
+        books:books.books, 
+        totalPrice: books.totalPrice
+    })
 })
 
 module.exports = router;

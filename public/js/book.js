@@ -22,8 +22,30 @@ $incAmount.addEventListener('click',()=>{
 })
 
 $addToCartButton.addEventListener('click', async ()=>{
-    axios.patch('/user/addToCart',{
-        _id:bookID,
-        amount:amountToAdd
-    });
+    if(getCookieValue('userToken')) //logged in
+        axios.patch('/user/addToCart',{
+            _id:bookID,
+            amount:amountToAdd
+        });
+    else{ //anonymous cart  
+        if(localStorage.getItem('cart')){ //cart already exists
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            let i;
+            for(i=0;i<cart.length;i++){ //find if book already added
+                if(cart[i]._id === bookID){
+                    cart[i].amount+=amountToAdd;
+                    break;
+                }
+            }
+            if(i === cart.length) //book was not in cart
+                cart.push({
+                    _id:bookID,
+                    amount:amountToAdd
+                })
+            localStorage.setItem('cart',JSON.stringify(cart));
+        }
+        else{
+            localStorage.setItem('cart',JSON.stringify([{_id:bookID,amount:amountToAdd}]));
+        }        
+    }
 })

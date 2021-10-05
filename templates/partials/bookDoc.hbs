@@ -1,0 +1,17 @@
+<div class="book-container">
+    <img src={{this.bookData.imageURL}} class="book-img">
+    <div class="book-data">
+        <h1 class="book-name">{{this.bookData.name}}</h1>
+        <h2 class="book-author">{{this.bookData.author}}</h2>
+        <h2 class="book-id">{{this.bookData._id}}</h2>
+        <div class="amount-control">
+            <span class="delete-book">&times;</span>
+            <span class="dec-amount">&#8722;</span>
+            <span class="amount">{{this.amount}}</span>
+            <span class="inc-amount">&#43;</span>
+        </div>
+    </div>
+    <div class="price">
+        {{this.totalPrice}}$
+    </div>
+</div>
