@@ -47,13 +47,6 @@ router.post('/user/login', async (req,res)=>{
     }
 })
 
-router.post('/user/logout',userAuth,async(req,res)=>{
-    const currToken = req.cookies.userToken;
-    req.user.tokens = req.user.tokens.filter(token=>token.token!==currToken);
-    await req.user.save()
-    res.send();
-})
-
 router.post('/user/new', async (req,res)=>{
     try{
         const user = new User(req.body);
@@ -67,6 +60,13 @@ router.post('/user/new', async (req,res)=>{
     catch(err){
         res.status(500).send(err);
     }
+})
+
+router.post('/user/logout',userAuth,async(req,res)=>{
+    const currToken = req.cookies.userToken;
+    req.user.tokens = req.user.tokens.filter(token=>token.token!==currToken);
+    await req.user.save()
+    res.send();
 })
 
 router.patch('/user/addToCart', userAuth , async (req,res)=>{
@@ -101,6 +101,21 @@ router.patch('/user/addToCart', userAuth , async (req,res)=>{
 
 router.get('/user/cart', userAuth, async (req,res)=>{
     res.send(req.user.cart);
+})
+
+router.patch('/user/edit', userAuth, async (req,res)=>{
+    const toEdit = req.body;
+    const user = req.user;
+    try{
+        for(let f in toEdit){
+            user[f] = toEdit[f];
+        }
+        await user.save();
+        res.send("User updated!");
+    }
+    catch(err){
+        res.status(500).send(err);
+    }
 })
 
 

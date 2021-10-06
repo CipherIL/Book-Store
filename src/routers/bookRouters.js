@@ -1,8 +1,6 @@
-const cookieParser = require("cookie-parser");
 const express = require("express");
 const {adminAuth} = require('../middleware/auth');
 const Book = require('../models/book');
-const User = require("../models/user");
 const router = new express.Router();
 
 const bookArrFromCart = async (cart) =>{
@@ -97,6 +95,25 @@ router.patch('/b/edit/:bookID', adminAuth, async (req,res)=>{
         if(!book)
             return res.status(400).send("No book found");
         res.send("Book updated successfully");
+    }
+    catch(err){
+        res.status(500).send("Server Error");
+    }
+})
+router.patch('/b/checkout', async (req,res)=>{
+    const toEdit = req.body;
+    toEdit.forEach(async (b)=>{
+        const book = await Book.findById(b._id);
+        book.amountInStock -= b.amount;
+        await book.save();
+    })
+})
+router.post('/b/delete', async (req,res)=>{
+    const bookID = req.body.bookID;
+    try{
+        const delBook = await Book.findByIdAndRemove(bookID);
+        console.log(delBook);
+        res.send("Book deleted!");
     }
     catch(err){
         res.status(500).send("Server Error");

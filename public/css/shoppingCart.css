@@ -1,9 +1,20 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+}
 #content-container{
-    width:95%;
-    margin: 2rem auto;
+    width:100%;
+    flex-grow: 1;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: auto 30%;
     
+}
+#cart-list{
+    border-right: 2px solid black; 
+    width:95%;
+    padding: 20px 40px 20px 20px;
 }
 
 .book-container{
@@ -33,6 +44,9 @@
 .book-author{
     font-family: 'Yaldevi', sans-serif;
     font-size: 1.4vw;
+}
+.book-id{
+    font-size: 1.5vw;
 }
 .amount-control{
     display: flex;
@@ -100,12 +114,69 @@
     transform: translateY(4px);      
 }
 
+#checkout-message{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgb(0,0,0,0.4);
+}
+#checkout-message-content{
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 30px;
+}
+#checkout-message-content *{
+    margin: 10px 0;
+}
+#checkout-message-content h1,#checkout-message-content h2{
+    color:rgb(40, 141, 40);
+    text-align: center;
+}
+#checkout-message-content button{
+    width:20vw;
+    height:4vw;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    background-color: rgb(40, 141, 40);
+    font-size: 2vw;
+}
+#checkout-message-content button:hover{
+    background-color: #1e691e;
+}
+#checkout-message-content button:active{
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
 @media screen and (max-width:1000px){
     #content-container{
         display: flex;
         flex-direction: column;
     }
+    #cart-list{
+        border: none;
+        width:100%;
+        padding: 0;
+    }
+    #books-container{
+        width:100%
+    }
     .book-container{
+        padding:10px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -127,5 +198,9 @@
     }
     #checkout-data{
         font-size: 6vw;
+    }
+    .book-id{
+        font-size: 4vw;
+        text-align: center;
     }
 }

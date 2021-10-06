@@ -21,7 +21,7 @@
             <button id="login-form-button" class="modal-button selected">Login</button>
             <button id="register-form-button" class="modal-button">Register</button>
         </div>
-        <div id="user-modal-forms">
+        <div class="modal-forms-container">
             {{>loginForm}}
             {{>registerForm}}
         </div>
@@ -35,6 +35,9 @@
         <div class="user-modal-buttons">
             <button class="modal-button selected">Edit</button>
             <button class="modal-button">Logout</button>
+        </div>
+        <div class="modal-forms-container">
+            {{>editUserForm}}
         </div>
     </div>
 </div>

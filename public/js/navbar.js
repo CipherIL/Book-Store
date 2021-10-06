@@ -10,6 +10,7 @@ const $loginSubmitButton = document.querySelector('#login-submit');
 const $registerSubmitButton = document.querySelector('#register-submit');
 const $modalCloseButton = document.querySelectorAll('.close');
 const $modalFormButtons = document.querySelectorAll('.modal-button');
+const $editUserButton = document.querySelector('#edit-submit');
 //Links
 const $links = document.querySelector('#links');
 const $browseLink = document.getElementById('link-browse');
@@ -88,6 +89,7 @@ $userLink.addEventListener('click',(e)=>{
         $userModal2.style.display = "flex";
 
 })
+
 //User login/register modal
 $userModal1.addEventListener('click',(e)=>{
     if(e.target === $modalFormButtons[0]){
@@ -152,7 +154,7 @@ $registerSubmitButton.addEventListener('click', async (e)=>{
             dateOfBirth: $dateOfBirth.value,
             cart
         })
-        .then(response=>{console.log(response)})
+        .then(response=>{location.href=location.href;})
         .catch(err=>{
             console.log(err.response.data)
         })
@@ -171,12 +173,44 @@ $userModal2.addEventListener('click',(e)=>{
     if(e.target === $modalFormButtons[3]){ //logout
         axios.post('/user/logout')
         .then(response=>{
-            document.cookie.split(";").forEach(function(c) { 
-                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-            });
+            document.cookie = "userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            localStorage.setItem('cart','[]');
             location.reload();
         })
     }
+})
+$editUserButton.addEventListener('click', async(e)=>{
+    e.preventDefault();
+    const $firstName = document.getElementById('edit-first-name');
+    const $lastName = document.getElementById('edit-last-name');
+    const $password = document.getElementById('edit-password');
+    const $dob = document.getElementById('edit-dob');
+    const $response = document.getElementById('edit-response');
+    const toEdit = {};
+    if($firstName.value!=="") toEdit.firstName = $firstName.value;
+    if($lastName.value!=="") toEdit.lastName = $lastName.value;
+    if($password.value!=="") toEdit.password = $password.value;
+    if($dob.value!=="") toEdit.dateOfBirth = $dob.value;
+    if(Object.keys(toEdit).length===0) return;
+    $editUserButton.disabled = true;
+    axios.patch('/user/edit',toEdit)
+    .then(response=>response.data)
+    .then(data=>{
+        $response.innerHTML = data;
+    })
+    .catch(err=>{
+        $response.innerHTML = err.response;
+    })
+    setTimeout(()=>{
+        $response.innerHTML="";
+        $firstName.value = "";
+        $lastName.value = "";
+        $password.value = "";
+        $dob.value = "";
+        $editUserButton.disabled = false;
+    },2000)
 })
 
 window.onresize = () => setNavbarVisibility();

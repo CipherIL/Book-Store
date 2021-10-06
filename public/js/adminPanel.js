@@ -8,7 +8,7 @@ const $modalButtons = [document.getElementById('add-admin-button'),
                        document.getElementById('edit-book-button'),
                        document.getElementById('add-new-book-button'),
                        document.getElementById('edit-user-button')];
-
+const $deleteBook = document.getElementById('delete-book');
 //get modal close buttons
 const $modalCloseButtons = [...document.getElementsByClassName('close')];
 
@@ -147,9 +147,27 @@ $addNewBookSubmit.addEventListener('click', async (e)=>{
 $logoutButton.addEventListener('click',()=>{
     axios.post('/admin/logout')
     .then(response=>{
-        document.cookie.split(";").forEach(function(c) { 
-            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-        });
+        document.cookie = "adminToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         location.href = '/admin';
     })
+})
+
+$deleteBook.addEventListener('click',()=>{
+    const $bookID = document.getElementById('edit-book-id');
+    $deleteBook.disabled = true;
+    const $editResponse = document.getElementById('edit-book-response');
+    
+    axios.post('/b/delete',{bookID:$bookID.innerHTML})
+    .then(response=>response.data)
+    .then(data=>{
+        $editResponse.innerHTML = data;
+    })
+    .catch(err=>{
+        $editResponse.innerHTML = err.response.data;
+    })
+    setTimeout(()=>{
+        $editResponse.innerHTML = "";
+        $deleteBook.disabled = false;
+        location.href = location.href;
+    },2000)
 })

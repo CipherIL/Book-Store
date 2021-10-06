@@ -2,7 +2,14 @@ const $adminEmail = document.getElementById('form-email');
 const $adminPassword = document.getElementById('form-password');
 const $loginPanel = document.getElementById('login-panel');
 const $loginButton = document.getElementById('form-button');
-const adminToken = document.cookie;
+
+//Util funcs
+const getCookieValue = (name) =>{
+    let match = document.cookie.match(RegExp('(?:^|;\\s*)'+name+'=([^;]*)'));
+    return match ? match[1]:null;
+}
+
+const adminToken = getCookieValue('adminToken');
 
 const initPage = async () => {
     if(adminToken)

@@ -152,6 +152,7 @@ body{
 }
 #edit-book{
     background-color: white;
+    position: relative;
 }
 .return{
     font-weight: bold;
@@ -163,6 +164,13 @@ body{
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+.delete-svg{
+    filter: invert(37%) sepia(87%) saturate(7467%) hue-rotate(354deg) brightness(103%) contrast(127%);
+    width: 25px;
+    position: absolute;
+    right:5px;
+    top:5px;
 }
 
 

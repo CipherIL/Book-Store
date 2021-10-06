@@ -55,6 +55,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 1rem;
 }
 #book-stock-data{
 
@@ -114,6 +115,11 @@
     box-shadow: 0 5px #666;
     transform: translateY(4px);      
 }
+#server-response{
+    text-align:center;
+    font-size: 2rem;
+    color: rgb(40, 141, 40);
+}
 
 
 @media screen and (max-width:1000px) {
@@ -152,5 +158,8 @@
     #shopping{
         margin-top:20px;
         flex-wrap: wrap;
-    }    
+    }   
+    #add-to-cart{
+        margin-top:20px;
+    } 
 }

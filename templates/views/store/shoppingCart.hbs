@@ -15,7 +15,7 @@
     <div id="content-container">
         <div id="cart-list">
             
-            <div id="empty-cart-message">
+            <div id="cart-message">
                 Your cart is empty! 
             </div>
             
@@ -33,6 +33,13 @@
             <button id="checkout-button">Checkout</button>
         </div>
         {{/if}}
+    </div>
+    <div id="checkout-message">
+        <div id="checkout-message-content">
+            <h1>Thank you for shopping at Itay's books!</h1>
+            <h2>Have a nice day!</h2>
+            <button id="rts-button">Return to store</button>
+        </div>
     </div>
     <footer>{{>footer}}</footer>
     <script src="/js/shoppingCart.js"></script>
