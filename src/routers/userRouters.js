@@ -26,13 +26,13 @@ router.post('/user/login', async (req,res)=>{
     const password = req.body.password;
     const cart = req.body.cart;
     try{
-        const user = await User.findOne({email})
+        const user = await User.findOne({email:email.toLowerCase()})
         if(!user)
-            return res.status(400).send("Invalid email or password");
+            return res.status(400).send("Invalid email or password1");
         const passMatch = await bcrypt.compare(password,user.password)
         
         if(!passMatch)
-            return res.status(400).send("Invalid email or password");
+            return res.status(400).send("Invalid email or password2");
         
         await mergeCarts(user,cart);
         const token = await user.generateAuthToken();
