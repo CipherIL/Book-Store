@@ -5,6 +5,7 @@ const $userModal2 = document.getElementById('user-modal-2');
 //Forms
 const $loginForm = document.querySelector("#login-form");
 const $registerForm = document.querySelector("#register-form");
+const $loginFormResponse = document.getElementById('login-form-response');
 //Buttons
 const $loginSubmitButton = document.querySelector('#login-submit');
 const $registerSubmitButton = document.querySelector('#register-submit');
@@ -128,12 +129,16 @@ $loginSubmitButton.addEventListener('click', async (e)=>{
             location.href=location.href;
         })
         .catch(err=>{
-            console.log(err.response.data)
+            $loginFormResponse.innerHTML = err.response.data
         })
     }
     catch(err){
-        console.log(err)
+        alert(err);
     }
+    setTimeout(()=>{
+        $loginFormResponse.innerHTML = "";
+        $loginSubmitButton.disabled = false;
+    },2000)
 })
 $registerSubmitButton.addEventListener('click', async (e)=>{
     e.preventDefault();
